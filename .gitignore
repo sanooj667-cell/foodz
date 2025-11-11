@@ -15,7 +15,6 @@ Thumbs.db
 # Django stuff
 *.log
 media/
-staticfiles/
 local_settings.py
 
 # SQLite DB (optional)
