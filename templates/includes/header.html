@@ -1,0 +1,30 @@
+{% load static %}
+<header class="h-[80px] shadow-md">
+    <section class="wrapper h-full flex justify-between items-center">
+        <div>
+            <h1><a href="index.html"><img src="{% static 'web/images/logo.png' %}" alt="logo" class="w-[90px]"></a></h1>
+        </div>
+
+        <div class="hidden md:block">
+            <ul class="flex justify-center">
+                <li class="mr-7"><a class="flex justify-start items-center " href="index.html"><img
+                            src="{% static 'web/images/home.png' %}" alt="image" class="w-[18px] mr-2">Home</a></li>
+                <li class="mr-7"><a class="flex justify-start items-center " href="#"><img
+                            src="{% static 'web/images/search.png' %}" alt="image" class="w-[18px] mr-2">Search</a></li>
+                <li class="mr-7"><a class="flex justify-start items-center " href="#"><img
+                            src="{% static 'web/images/bag.png' %}" alt="image" class="w-[18px] mr-2">Cart</a></li>
+                <li><a class="flex justify-start items-center " href="#"><img src="{% static 'web/images/user.png' %}"
+                            alt="image" class="w-[18px] mr-2">Accoumt</a></li>
+
+            </ul>
+        </div>
+
+        <div class="flex justify-end items-center">
+            <img src="{% static 'web/images/map.png' %}" alt="image" class="w-[18px] mr-2">
+            <p class="text-[16px] font-semibold pb-1 border-b-2 border-yellow-400 mr-6">Tirur,Malapuram</p>
+            <a href="{% url 'web:logout' %}" class="bg-gray-600 p-2 rounded-full">
+                <img src="{% static 'web/images/logout.png'%}" alt="image" class="w-[22px]">
+            </a>
+        </div>
+    </section>
+</header>
