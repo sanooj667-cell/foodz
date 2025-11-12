@@ -25,7 +25,7 @@ class CartItem(models.model):
 
     def __str__(self):
         return self.name
-    
+
     
     
     
