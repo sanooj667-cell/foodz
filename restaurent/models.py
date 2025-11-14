@@ -80,7 +80,7 @@ class FoodItems(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='fooditem')
     price = models.IntegerField()
-    category = models.ForeignKey(FoodCatagory, on_delete=models.CASCADE)
+    category = models.ForeignKey(FoodCatagory, on_delete=models.CASCADE, related_name="food_items")
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     is_veg = models.BooleanField(default=False)
 

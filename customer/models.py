@@ -7,8 +7,12 @@ from restaurent.models import Store, FoodItems
 class Customer(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
 
+    def __str__(self):
+        return self.user.email
 
-class CartItem(models.model):
+
+
+class CartItem(models.Model):
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     item = models.ForeignKey(FoodItems, on_delete=models.CASCADE)
@@ -24,8 +28,9 @@ class CartItem(models.model):
         ordering = ['-id']
 
     def __str__(self):
-        return self.name
+        return self.item.name
 
+    
     
     
     

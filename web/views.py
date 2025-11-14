@@ -1,11 +1,12 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Sum
 
 from django.contrib.auth import authenticate, login as auth_login , logout as auth_logout   
 from django.contrib.auth.decorators import login_required    
 
 from users.models import User
-from customer.models import Customer
+from customer.models import Customer,CartItem
 from restaurent.models import Store, Slider ,Storecategory,FoodCatagory,FoodItems
 
 
@@ -115,18 +116,80 @@ def single_restaurent(request, id):
     single_restaurent = Store.objects.get(id=id)
     food_category = FoodCatagory.objects.filter(store=single_restaurent)
     food_items =FoodItems.objects.filter(store=single_restaurent)
+
+    cart = None
+    count = 0 
+    price = 0
+    
+    if CartItem.objects.all().exists():
+        cart = CartItem.objects.all()
+        count = cart.count()
+        price = cart.aggregate(Sum('amount'))['amount__sum']
+
+
+    product_list = []
+    for item in food_items:
+        cart_item = CartItem.objects.filter(item=item).first()
+        if cart_item:
+            quantity = cart_item.quantity
+        else:
+            quantity=0
+
+        product_list.append({
+            'food_item':item,
+            'quantity':quantity,
+        })    
+
+
+
+
+    
+
+    
  
 
 
     context = {
          "store" :single_restaurent,
          "food_categorys" :food_category,
-         "food_items" :food_items,
+         "product_list" :product_list,
+         "cart" : cart,
+         "count" : count,
+         "price" : price
 
-      }
+      }  
 
 
     return render(request, 'web/single_restaurent.html',context=context)
+
+
+
+
+
+
+def add_cart(request, id): 
+    user = request.user
+    customer = Customer.objects.get(user=user)
+    item = FoodItems.objects.get(id = id)
+    store =item.store
+    amount = item.price
+   
+
+
+    CartItem.objects.create(
+        customer = customer,
+        store = store,
+        item = item ,
+        amount = amount,
+        quantity =1,
+    )
+
+    return HttpResponseRedirect(reverse("web:single_restaurent", kwargs={"id":store.id}))
+
+
+
+   
+
 
 
 
