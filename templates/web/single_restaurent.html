@@ -21,7 +21,7 @@
                     </span>
                     <span class="flex justify-start items-center">
                         <img src="{% static 'web/images/clock.png' %}" alt="image" class="w-[16px] mr-2 ">
-                       {{ store.time }}
+                        {{ store.time }}
                     </span>
                 </div>
             </div>
@@ -33,46 +33,60 @@
 <section class="">
 
 
-   <div class="flex flex-col w-full mx-auto items-center">
+    <div class="flex flex-col w-full mx-auto items-center">
 
-    {% for category in food_categorys %}
+        {% for category in food_categorys %}
         {% if category.food_items.all %}
-            <h1 class="text-[20px] font-semibold mb-5 w-full md:w-[33%] sm:w-[40%] mt-6">
-                {{ category.name }}
-            </h1>
+        <h1 class="text-[20px] font-semibold mb-5 w-full md:w-[33%] sm:w-[40%] mt-6">
+            {{ category.name }}
+        </h1>
 
-            {% for item in product_list %}
-                {% if item.food_item.category == category %}
-                <div class=" p-4 border-b flex justify-between md:w-[35%] sm:w-[40%] mx-2 ">
-                    <div class="mb-8">
+        {% for item in product_list %}
+        {% if item.food_item.category == category %}
+        <div class=" p-4 border-b flex justify-between md:w-[35%] sm:w-[40%] mx-2 ">
+            <div class="mb-8">
 
-                        {% if item.food_item.is_veg %}
-                        <img class="w-[16px] mr-2 mb-2" src="{% static 'web/images/veg.png' %}" alt="">
-                        {% else %}
-                        <img class="w-[16px] mr-2 mb-2" src="{% static 'web/images/non.png' %}" alt="">
-                        {% endif %}
+                {% if item.food_item.is_veg %}
+                <img class="w-[16px] mr-2 mb-2" src="{% static 'web/images/veg.png' %}" alt="">
+                {% else %}
+                <img class="w-[16px] mr-2 mb-2" src="{% static 'web/images/non.png' %}" alt="">
+                {% endif %}
 
-                        <h3 class="text-[18px] font-bold"> {{ item.food_item.name }}</h3>
-                        <h4 class="font-semibold mb-5">₹ <span>{{ item.food_item.price }}</span></h4>
+                <h3 class="text-[18px] font-bold"> {{ item.food_item.name }}</h3>
+                <h4 class="font-semibold mb-5">₹ <span>{{ item.food_item.price }}</span></h4>
 
-                        {% if item.quantity > 0%}
-                            <a class="bg-green-500 rounded-md text-white px-4 py-1 text-[16px] font-semibold" href="">-</a>
-                            <a class="bg-green-500 rounded-md text-white px-4 py-1 text-[16px] font-semibold" href="">1</a>
-                            <a class="bg-green-500 rounded-md text-white px-4 py-1 text-[16px] font-semibold" href="">+</a>
+                {% if item.quantity > 0%}
+                <div class="flex items-center">
+                    <div class="flex items-center rounded-full overflow-hidden">
 
-                        {% else %}
-                            <a class="bg-green-500 rounded-md text-white px-4 py-1 text-[16px] font-semibold" href="{% url 'web:add_cart' id=item.food_item.id  %}">ADD</a>
-                        {% endif %}
+                        <a href="#"></a>" class="px-3 py-2 text-white text-xl font-bold bg-green-500">
+                            -
+                        </a>
+
+                        <div class="bg-white w-12 h-full text-center">{{ item.quantity }}</div>
+
+                        <a href="{% url 'web:cart-plus' item.cart_id %}"></a>" class="px-3 py-2 text-white text-xl font-bold bg-green-500">
+                            +
+                        </a>
 
                     </div>
-                    <img class="w-[30%] rounded-xl mr-4" src="{{ item.food_item.image.url }}" alt="image">
                 </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
 
-</div>
+
+                {% else %}
+                <a class="bg-green-500 rounded-md text-white px-4 py-1 text-[16px] font-semibold"
+                    href="{% url 'web:add_cart' id=item.food_item.id  %}">ADD</a>
+                {% endif %}
+
+            </div>
+            <img class="w-[30%] rounded-xl mr-4" src="{{ item.food_item.image.url }}" alt="image">
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+
+    </div>
 
 
 
@@ -88,22 +102,22 @@
 
 
     {% if cart %}
- 
 
-        <div class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[95%] sm:w-[60%] md:w-[40%] z-50 flex justify-center">
-            <div class="bg-red-500 text-white flex justify-between items-center px-4 py-3 rounded-md w-full shadow-lg">
 
-                <p class="text-sm sm:text-base">
-                    {{count}} item <span class="mx-1">•</span> <span>₹ {{price}}</span>
-                </p>
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[95%] sm:w-[60%] md:w-[40%] z-50 flex justify-center">
+        <div class="bg-red-500 text-white flex justify-between items-center px-4 py-3 rounded-md w-full shadow-lg">
 
-                <div class="flex items-center gap-2 cursor-pointer">
-                    <p class="text-sm sm:text-base">View cart</p>
-                    <img src="{% static 'web/images/bag.png' %}" class="w-[18px] sm:w-[20px]">
-                </div>
+            <p class="text-sm sm:text-base">
+                {{count}} item <span class="mx-1">•</span> <span>₹ {{price}}</span>
+            </p>
 
+            <div class="flex items-center gap-2 cursor-pointer">
+                <p class="text-sm sm:text-base">View cart</p>
+                <img src="{% static 'web/images/bag.png' %}" class="w-[18px] sm:w-[20px]">
             </div>
+
         </div>
+    </div>
 
     {% endif %}
 
@@ -122,3 +136,4 @@
 
 
 {% endblock %}
+
