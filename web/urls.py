@@ -11,10 +11,14 @@ urlpatterns = [
     path('logout/',views.logout ,name="logout"),
 
 
+
+
     path('restaurents/<int:id>/',views.restaurents,name="restaurents"),
     path('single_restaurent/<int:id>/',views.single_restaurent,name="single_restaurent"),
     path('add_cart/<int:id>/',views.add_cart,name="add_cart"),
     path('cart_plus/<int:id>/',views.cart_plus,name="cart_plus"),
+    path('cart_minies/<int:id>/',views.cart_minies,name="cart_minies"),
+
 
 
 

@@ -138,6 +138,7 @@ def single_restaurent(request, id):
         product_list.append({
             'food_item':item,
             'quantity':quantity,
+            'cart' : cart_item
         })    
 
 
@@ -189,17 +190,29 @@ def add_cart(request, id):
 
 
 def cart_plus(request, id):
-    prouduct = CartItem.objects.get(id=id)
-    prouduct.quantity = prouduct.quantity + 1
-    prouduct.amount += prouduct.quantity * prouduct.item.price
-    prouduct.save()
+    cart_item = CartItem.objects.get(id=id)
+    cart_item.quantity = cart_item.quantity + 1
+    cart_item.amount +=  cart_item.item.price
+    cart_item.save()
 
 
-    return HttpResponseRedirect(reverse("web:single_restaurent", kwargs={"id":prouduct.store.id}))
+    return HttpResponseRedirect(reverse("web:single_restaurent", kwargs={"id":cart_item.store.id}))
 
 
 
 
+def cart_minies(request, id):
+    cart_item = CartItem.objects.get(id=id)
+
+    if cart_item.quantity > 1:
+        cart_item.quantity = cart_item.quantity -1
+        cart_item.amount -=  cart_item.item.price
+        cart_item.save()
+    else:
+        cart_item.delete()
+
+
+    return HttpResponseRedirect(reverse("web:single_restaurent", kwargs={"id":cart_item.store.id}))
 
 
    
