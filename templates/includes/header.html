@@ -2,12 +2,12 @@
 <header class="h-[80px] shadow-md">
     <section class="wrapper h-full flex justify-between items-center">
         <div>
-            <h1><a href="index.html"><img src="{% static 'web/images/logo.png' %}" alt="logo" class="w-[90px]"></a></h1>
+            <h1><a href="{% url 'web:index' %}"><img src="{% static 'web/images/logo.png' %}" alt="logo" class="w-[90px]"></a></h1>
         </div>
 
         <div class="hidden md:block">
             <ul class="flex justify-center">
-                <li class="mr-7"><a class="flex justify-start items-center " href="index.html"><img
+                <li class="mr-7"><a class="flex justify-start items-center " href="{% url 'web:index' %}"><img
                             src="{% static 'web/images/home.png' %}" alt="image" class="w-[18px] mr-2">Home</a></li>
                 <li class="mr-7"><a class="flex justify-start items-center " href="#"><img
                             src="{% static 'web/images/search.png' %}" alt="image" class="w-[18px] mr-2">Search</a></li>

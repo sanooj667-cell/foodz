@@ -174,8 +174,19 @@ def add_cart(request, id):
     item = FoodItems.objects.get(id = id)
     store =item.store
     amount = item.price
-   
 
+    existing_items = CartItem.objects.filter(customer=customer)
+
+
+
+    if existing_items.exists():
+        existing_store = existing_items.first().store
+
+        if existing_store != store:
+            existing_items.delete()
+
+
+         
 
     CartItem.objects.create(
         customer = customer,
@@ -215,6 +226,51 @@ def cart_minies(request, id):
     return HttpResponseRedirect(reverse("web:single_restaurent", kwargs={"id":cart_item.store.id}))
 
 
+
+
+
+
+
+def cart(request):
+    user = request.user
+    customer = Customer.objects.get(user=user)
+    cart_items = CartItem.objects.filter(customer=customer)
+    store = cart_items.first().store
+
+
+    context = {
+        "cart_item":cart_items,
+        "store":store
+    }
+
+
+
+    return render(request, 'web/cart.html',context=context)
+
+
+def cart_incriment(request, id):
+    cart_item = CartItem.objects.get(id=id)
+    cart_item.quantity = cart_item.quantity + 1
+    cart_item.amount +=  cart_item.item.price
+    cart_item.save()
+
+
+    return HttpResponseRedirect(reverse("web:cart"))
+
+
+
+def cart_decriment(request, id):
+    cart_item = CartItem.objects.get(id=id)
+
+    if cart_item.quantity > 1:
+        cart_item.quantity = cart_item.quantity -1
+        cart_item.amount -=  cart_item.item.price
+        cart_item.save()
+    else:
+        cart_item.delete()
+
+
+    return HttpResponseRedirect(reverse("web:cart"))
    
 
 
