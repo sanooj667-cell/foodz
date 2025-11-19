@@ -13,6 +13,8 @@ urlpatterns = [
     path('restaurents/<int:id>/',views.restaurents,name="restaurents"),
     path('single_restaurent/<int:id>/',views.single_restaurent,name="single_restaurent"),
     path('cart/',views.cart ,name="cart"),
+    path('address/',views.address ,name="address"),
+
 
 
 

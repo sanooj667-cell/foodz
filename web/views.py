@@ -278,4 +278,13 @@ def cart_decriment(request, id):
 
 
 
-            
+
+
+
+
+
+def address(request):
+
+
+    return render(request, 'web/address.html')
+        
