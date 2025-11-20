@@ -33,4 +33,11 @@ class CartItem(models.Model):
     
     
     
+class Address(models.Model):
+    longitude = models.CharField(max_length=100 , null=True,blank=True)
+    latitude =  models.CharField(max_length=100 , null=True,blank=True)
+    address =  models.CharField(max_length=255)
+    appartment = models.CharField(max_length=100)
+    landmark = models.CharField(max_length=255)
+
     
