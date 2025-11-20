@@ -287,4 +287,15 @@ def address(request):
 
 
     return render(request, 'web/address.html')
+
+
+
+
+
+def add_address(request):
+
+
+    return render(request, 'web/add_address.html')
+
+
         

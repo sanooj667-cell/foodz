@@ -14,6 +14,8 @@ urlpatterns = [
     path('single_restaurent/<int:id>/',views.single_restaurent,name="single_restaurent"),
     path('cart/',views.cart ,name="cart"),
     path('address/',views.address ,name="address"),
+    path('add_address/',views.add_address ,name="add_address"),
+
 
 
 

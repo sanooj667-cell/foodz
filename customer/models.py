@@ -40,4 +40,16 @@ class Address(models.Model):
     appartment = models.CharField(max_length=100)
     landmark = models.CharField(max_length=255)
 
+
+    class Meta:
+        db_table = 'address'
+        verbose_name = 'address'
+        verbose_name_plural = "address"
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.item.name
+
+
+
     
