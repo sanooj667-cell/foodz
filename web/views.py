@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse ,redirect
 from django.http import HttpResponseRedirect
 from django.db.models import Sum
 
@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login as auth_login , logout as au
 from django.contrib.auth.decorators import login_required    
 
 from users.models import User
-from customer.models import Customer,CartItem
+from customer.models import Customer,CartItem, Address
 from restaurent.models import Store, Slider ,Storecategory,FoodCatagory,FoodItems
 
 
@@ -283,19 +283,68 @@ def cart_decriment(request, id):
 
 
 
-def address(request):
+def address_page(request):
+
+    address = Address.objects.all()
+
+    context = {
+        "addres" : address,
+        }
 
 
-    return render(request, 'web/address.html')
+    return render(request, 'web/address.html', context=context)
 
 
 
 
 
 def add_address(request):
+    if request.method == 'POST':
+ 
+        addr = request.POST.get("address")
+        app = request.POST.get("appartment")
+        land = request.POST.get("landmark")
+        addr_type = request.POST.get("label_as")
 
+        Address.objects.create(
+            address=addr,
+            appartment=app,
+            landmark=land,
+            address_type=addr_type
+        )
+
+        return redirect('web:address_page')
 
     return render(request, 'web/add_address.html')
 
 
-        
+
+
+
+def delete_address(request, id):
+    address = Address.objects.get(id=id)
+    address.delete()
+
+
+    return redirect('web:address_page')
+
+
+def edit_addres(request, id ):
+
+    address = Address.objects.get(id=id)
+    context = {
+        'address' : address
+    }
+    if request.method == 'POST':
+        address.address=request.POST.get("address")
+        address.appartment=request.POST.get("appartment")
+        address.landmark=request.POST.get("landmark")
+        address.address_type=request.POST.get("label_as")
+        address.save()
+
+        return redirect("web:address_page")
+    
+    return render(request, 'web/add_address.html', context=context)
+
+
+

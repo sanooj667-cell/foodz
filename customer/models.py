@@ -39,6 +39,8 @@ class Address(models.Model):
     address =  models.CharField(max_length=255)
     appartment = models.CharField(max_length=100)
     landmark = models.CharField(max_length=255)
+    address_type = models.CharField(max_length=255) 
+    is_selected = models.BooleanField(default=False)
 
 
     class Meta:
@@ -48,7 +50,7 @@ class Address(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return self.item.name
+        return self.address
 
 
 
