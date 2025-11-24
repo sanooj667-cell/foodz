@@ -237,10 +237,13 @@ def cart(request):
     cart_items = CartItem.objects.filter(customer=customer)
     store = cart_items.first().store
 
+    selected_addres= Address.objects.filter(is_selected=True).first()
+
 
     context = {
         "cart_item":cart_items,
-        "store":store
+        "store":store,
+        "selected_add":selected_addres,
     }
 
 
@@ -348,3 +351,11 @@ def edit_addres(request, id ):
 
 
 
+def select_address(request, id):
+    Address.objects.update(is_selected=False)
+
+    selected =Address.objects.get(id=id)
+    selected.is_selected = True
+    selected.save()
+
+    return redirect('web:cart')

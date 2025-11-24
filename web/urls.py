@@ -30,6 +30,8 @@ urlpatterns = [
 
     path('delete_address/<int:id>/',views.delete_address,name="delete_address"),
     path('edit_addres/<int:id>/',views.edit_addres,name="edit_addres"),
+    path('select_address/<int:id>/',views.select_address,name="select_address"),
+
 
 
 
