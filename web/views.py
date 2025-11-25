@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login as auth_login , logout as au
 from django.contrib.auth.decorators import login_required    
 
 from users.models import User
-from customer.models import Customer,CartItem, Address
+from customer.models import Customer,CartItem, Address, Bill
 from restaurent.models import Store, Slider ,Storecategory,FoodCatagory,FoodItems
 
 
@@ -235,6 +235,35 @@ def cart(request):
     user = request.user
     customer = Customer.objects.get(user=user)
     cart_items = CartItem.objects.filter(customer=customer)
+
+    if not  cart_items.exists():
+        return render(request, 'web/cart.html')
+    
+    sub_totel = sum(item.amount for item in cart_items)
+
+    offer_price = 0
+    delivery_charge = 0
+
+
+    totel = sub_totel - offer_price + delivery_charge
+
+    Bill.objects.create(
+        customer = customer,
+        sub_totel = sub_totel,
+        offer_price = offer_price,
+        delivary_charge = delivery_charge,
+        totel = totel,
+
+    )
+
+
+
+
+
+
+
+
+
     store = cart_items.first().store
 
     selected_addres= Address.objects.filter(is_selected=True).first()
@@ -244,6 +273,14 @@ def cart(request):
         "cart_item":cart_items,
         "store":store,
         "selected_add":selected_addres,
+        "sub_totel":sub_totel,
+        "offer_price":offer_price,
+        "delivery_charge":delivery_charge,
+        "totel":totel,
+
+
+
+        
     }
 
 
@@ -287,8 +324,9 @@ def cart_decriment(request, id):
 
 
 def address_page(request):
-
-    address = Address.objects.all()
+    user = request.user
+    customer = Customer.objects.get(user=user)
+    address = Address.objects.filter(customer=customer)
 
     context = {
         "addres" : address,
@@ -302,14 +340,17 @@ def address_page(request):
 
 
 def add_address(request):
+
     if request.method == 'POST':
- 
+        user = request.user
+        custo = Customer.objects.get(user=user)
         addr = request.POST.get("address")
         app = request.POST.get("appartment")
         land = request.POST.get("landmark")
         addr_type = request.POST.get("label_as")
 
         Address.objects.create(
+            customer= custo,
             address=addr,
             appartment=app,
             landmark=land,
@@ -352,10 +393,12 @@ def edit_addres(request, id ):
 
 
 def select_address(request, id):
+    
     Address.objects.update(is_selected=False)
-
     selected =Address.objects.get(id=id)
     selected.is_selected = True
     selected.save()
 
     return redirect('web:cart')
+
+

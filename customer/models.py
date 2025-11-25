@@ -34,6 +34,7 @@ class CartItem(models.Model):
     
     
 class Address(models.Model):
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True, blank=True)
     longitude = models.CharField(max_length=100 , null=True,blank=True)
     latitude =  models.CharField(max_length=100 , null=True,blank=True)
     address =  models.CharField(max_length=255)
@@ -51,6 +52,27 @@ class Address(models.Model):
 
     def __str__(self):
         return self.address
+    
+
+
+class Bill(models.Model):
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True, blank=True)
+    sub_totel = models.IntegerField()
+    offer_price = models.IntegerField(default=0)   
+    delivary_charge = models.IntegerField(default=0)
+    totel = models.IntegerField()
+
+    class Meta:
+        db_table = 'bill'
+        verbose_name = 'bill'
+        verbose_name_plural = "bills"
+        ordering = ['-id']
+
+def __str__(self):
+    return f"Bill #{self.id} - ₹{self.totel}"
+
+
+    
 
 
 
