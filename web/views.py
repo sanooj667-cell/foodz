@@ -402,3 +402,19 @@ def select_address(request, id):
     return redirect('web:cart')
 
 
+
+
+
+def offer(request):
+
+
+    return render(request, "web/offer.html")
+
+
+
+
+
+
+
+
+

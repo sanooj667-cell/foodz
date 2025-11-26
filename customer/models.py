@@ -3,6 +3,18 @@ from users.models import User
 from restaurent.models import Store, FoodItems
 
 
+ORDER_STATUS_CHOICES = [
+    ("PENDING", "Pending"),
+    ("CONFIRMED", "Confirmed"),
+    ("PREPARING", "Preparing"),
+    ("READY", "Ready for Pickup"),
+    ("OUT_FOR_DELIVERY", "Out For Delivery"),
+    ("DELIVERED", "Delivered"),
+    ("CANCELLED", "Cancelled"),
+]
+
+
+
 
 class Customer(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
@@ -70,6 +82,48 @@ class Bill(models.Model):
 
 def __str__(self):
     return f"Bill #{self.id} - ₹{self.totel}"
+
+
+
+
+
+
+
+class Oder(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, null=True,blank=True)
+
+    offer_price = models.FloatField()   
+    delivary_charge = models.FloatField()
+    totel = models.FloatField()
+
+    order_id = models.CharField(max_length=255)
+    status =  models.CharField(max_length=255, choices=ORDER_STATUS_CHOICES)
+
+
+    class Meta:
+        db_table = 'order'
+        verbose_name = 'order'
+        verbose_name_plural = "orders"
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.order_i
+    
+
+    class Oder_items(models.Model):
+        customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+        order = models.ForeignKey(Oder,on_delete=models.CASCADE)
+        qty = models.IntegerField()
+        store = models.ForeignKey(Store, on_delete=models.CASCADE)
+        amnt = models.FloatField()
+        
+    
+
+
+
+    
 
 
     

@@ -27,6 +27,8 @@ urlpatterns = [
     path('cart_incriment/<int:id>/',views.cart_incriment,name="cart_incriment"),
     path('cart_decriment/<int:id>/',views.cart_decriment,name="cart_decriment"),
     path('add_address/',views.add_address,name="add_address"),
+    path('offer/',views.offer,name="offer"),
+
 
     path('delete_address/<int:id>/',views.delete_address,name="delete_address"),
     path('edit_addres/<int:id>/',views.edit_addres,name="edit_addres"),
