@@ -1,0 +1,49 @@
+{% extends 'base/web-base.html' %}
+{% load static %}
+
+{% block container %}
+
+<header class="h-[80px] shadow-md">
+    <ul class="flex justify-between w-[55%] md:w-[50%] py-3">
+        <li><a href="{% url 'web:index' %}"><img src="{% static 'web/images/arrow.png' %}" alt="img" class="w-[24px] ml-6  py-3"></a></li>
+        <li class="font-bold text-[30px]">Offer</li>
+    </ul>
+</header>
+
+<div class="w-full flex justify-center px-4">
+    <div class="w-full max-w-[650px] mt-8 space-y-6">
+
+        <!-- CARD 1 -->
+        <div class="border border-gray-200 rounded-xl shadow-sm px-6 py-5 flex justify-between items-center">
+            <div class="my-3">
+                <p class="text-[17px] my-3 font-bold">SBI40N</p>
+                <p class="text-[14px] text-red-500 font-bold border-b my-5 mt-1">
+                    Maximum discount upto ₹ 120 on orders above ₹ 200
+                </p>
+            </div>
+
+            <a href="#" 
+               class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md text-[14px] font-bold transition">
+                APPLY
+            </a>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="border border-gray-200 rounded-xl shadow-sm px-6 py-5 flex justify-between items-center">
+            <div class="my-3">
+                <p class="text-[17px] my-3 font-bold">AXIS30</p>
+                <p class="text-[14px] text-gray-600 font-bold border-b my-5 mt-1">
+                    Maximum discount upto ₹ 50 on orders above ₹ 500
+                </p>
+            </div>
+
+            <a href="#" 
+               class="bg-gray-400 text-white px-6 py-2 rounded-md text-[14px] font-bold">
+                APPLY
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

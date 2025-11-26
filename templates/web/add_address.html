@@ -1,0 +1,69 @@
+{% extends 'base/web-base.html' %}
+{% load static %}
+
+{% block container %}
+
+<header class="h-[80px] shadow-md">
+    <ul class="flex justify-between w-[55%] md:w-[50%] py-3">
+        <li><a href="{% url 'web:address_page' %}"><img src="{% static 'web/images/arrow.png' %}" alt="img" class="w-[24px] ml-6 py-3"></a></li>
+        <li class="font-bold text-[30px]">Address</li>
+    </ul>
+</header>
+
+<section>
+
+    <div class="p-4 rounded-lg bg-slate-500 h-52 w-[80%] sm:w-[70%] md:w-[50%] shadow-md mx-auto my-8"></div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="w-[80%] sm:w-[70%] md:w-[50%] mx-auto">
+
+            <!-- Address -->
+            <label class="block font-semibold mb-1">Address</label>
+            <input type="text" name="address" value="{{address.address}}" class="rounded-lg w-full border p-3 mb-4">
+
+            <!-- Apartment -->
+            <label class="block font-semibold mb-1">Apartment</label>
+            <input name="appartment" type="text" value="{{address.appartment}}" class="rounded-lg w-full border p-3 mb-4">
+
+            <!-- Landmark -->
+            <label class="block font-semibold mb-1">Landmark</label>
+            <input name="landmark" type="text" value="{{address.landmark}}" class="rounded-lg w-full border p-3 mb-6">
+
+            <p class="font-semibold mb-2">Label as</p>
+
+            <div class="flex gap-4 mb-6">
+
+                <!-- HOME -->
+                <label class="flex-1">
+                    <input type="radio" name="label_as" value="home" class="hidden peer"
+                    {% if address.address_type == "home" %}checked{% endif %}>
+                    <div class="peer-checked:bg-red-500 peer-checked:text-white border rounded-md text-center py-2">HOME</div>
+                </label>
+
+                <label class="flex-1">
+                    <input type="radio" name="label_as" value="work" class="hidden peer"
+                    {% if address.address_type == "work" %}checked{% endif %}>
+                    <div class="peer-checked:bg-red-500 peer-checked:text-white border rounded-md text-center py-2">WORK</div>
+                </label>
+
+                <label class="flex-1">
+                    <input type="radio" name="label_as" value="other" class="hidden peer"
+                    {% if address.address_type == "other" %}checked{% endif %}>
+                    <div class="peer-checked:bg-red-500 peer-checked:text-white border rounded-md text-center py-2">OTHER</div>
+                </label>    
+
+            </div>
+
+
+            <button type="submit"
+                class="w-full bg-red-500 text-white py-3 mb-6 rounded-md font-semibold block text-center">
+                SAVE ADDRESS
+            </button>
+
+        </div>
+    </form>
+</section>
+
+{% endblock %}

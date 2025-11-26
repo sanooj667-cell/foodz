@@ -1,0 +1,85 @@
+{% extends 'base/web-base.html' %}
+{% load static %}
+
+{% block container %}
+
+<header class="h-[80px] shadow-md">
+    <ul class="flex justify-between w-[55%] md:w-[50%] py-3">
+        <li><a href="{% url 'web:index' %}"><img src="{% static 'web/images/arrow.png' %}" alt="img" class="w-[24px] ml-6  py-3"></a></li>
+        <li class="font-bold text-[30px]">Address</li>
+    </ul>
+</header>
+
+
+<section>
+
+    <div class="w-full flex justify-center mt-6 px-4">
+        <a class="w-full max-w-3xl bg-red-500 text-white font-semibold py-3 rounded-md text-center" href="{% url 'web:add_address' %}">
+            ADD NEW ADDRESS
+        </a>
+    </div>
+
+
+{% for ad in addres %}
+    <div class="w-full flex justify-center mt-6 px-4">
+        <div
+            class="w-full max-w-3xl bg-gray-100 font-semibold py-6 px-6 rounded-md flex flex-col sm:flex-row items-center gap-6">
+
+            <!-- Left Icon Circle -->
+            <div class="flex items-center justify-center rounded-full bg-white w-24 h-24 shrink-0">
+                {% if ad.address_type == "home" %}
+                <img src="{% static 'web/images/house.png' %}" alt="home" class="w-16 h-16 ">
+
+                {% elif ad.address_type == "work" %}
+                <img src="{% static 'web/images/work.png' %}" alt="home" class="w-16 h-16 ">
+
+                {% else %}
+                <img src="{% static 'web/images/house.png' %}" alt="home" class="w-16 h-16 ">
+
+                {% endif %} 
+            </div>
+
+
+            <!-- Right Content -->
+            <div
+                class="w-full bg-gray-100 font-semibold py-3 rounded-md flex flex-col sm:flex-row sm:items-center sm:justify-between px-6">
+
+                <div>
+                    <h1 class="my-2">{{ ad.address_type}}</h1>
+                    <p class="text-sm sm:text-base">
+                        {{ ad.address}},{{ ad.appartment}}, {{ ad.landmark}}, {{ ad.address_type}} Address
+                    </p>
+                </div>
+
+                <div class="flex gap-4 mt-3 sm:mt-0">
+                    <a href="{% url 'web:select_address' id=ad.id %}"><img src="{% static 'web/images/checkmark.png'%}" alt="img" class="w-6 h-6"></a>
+                    <a href="{% url 'web:edit_addres' id=ad.id %} "><img src="{% static 'web/images/edit.png'%}" alt="img" class="w-6 h-6"></a>
+                    <a href="{% url 'web:delete_address' id=ad.id %} " onclick="return confirm('Are you sure?');"><img src="{% static 'web/images/delet.png'%}" alt="img" class="w-6 h-6"></a>
+
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+{% endblock %}
