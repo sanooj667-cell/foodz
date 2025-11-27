@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login as auth_login , logout as au
 from django.contrib.auth.decorators import login_required    
 
 from users.models import User
-from customer.models import Customer,CartItem, Address, Bill
+from customer.models import Customer,CartItem, Address, Bill, Order ,Order_items
 from restaurent.models import Store, Slider ,Storecategory,FoodCatagory,FoodItems
 
 
@@ -143,11 +143,6 @@ def single_restaurent(request, id):
 
 
 
-
-    
-
-    
- 
 
 
     context = {
@@ -393,13 +388,71 @@ def edit_addres(request, id ):
 
 
 def select_address(request, id):
-    
     Address.objects.update(is_selected=False)
     selected =Address.objects.get(id=id)
     selected.is_selected = True
     selected.save()
 
     return redirect('web:cart')
+
+
+
+def place_order(request):
+    user = request.user
+    customer = Customer.objects.get(user=user)
+
+
+    cart_items = CartItem.objects.filter(customer=customer)
+
+
+    if not cart_items.exists():
+        return redirect("cart")
+    
+
+
+    address = Address.objects.get(user=user, is_slected =True)
+    if Order.objects.filter(customer=customer).exists():
+        preord = Order.objects.filter(customer=customer).first()
+        order_id = f"ORD000{preord.id +1}"
+    else:
+        order_id = f"ORD0000"
+
+
+
+
+    sub_totel = Sum(item.amount for item in cart_items)
+    offer_price = 0 
+    delivery_charge = 30
+    totel = sub_totel - offer_price + delivery_charge
+
+
+    order = Order.objects.create(
+        customer = customer,
+        address = address,
+        offer_price = offer_price,
+        store = cart_items.first().store,
+        delivery_charge = delivery_charge,
+        sub_totel= sub_totel,    
+        totel = totel,
+        order_id = order_id,
+        status = "PENDING"
+    )
+
+    for item in cart_items:
+        order_item =Order_items.objects.create(
+            customer = customer,
+            order = order,
+            store = item.store,
+            product = item.item,
+            quantity = item.quantity,
+            amount = item.amount,
+        )
+
+
+        cart_items.delete()
+
+        return redirect("orders")
+
 
 
 

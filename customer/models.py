@@ -89,7 +89,7 @@ def __str__(self):
 
 
 
-class Oder(models.Model):
+class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE, null=True,blank=True)
@@ -97,6 +97,7 @@ class Oder(models.Model):
     offer_price = models.FloatField()   
     delivary_charge = models.FloatField()
     totel = models.FloatField()
+    sub_totel =  models.FloatField()
 
     order_id = models.CharField(max_length=255)
     status =  models.CharField(max_length=255, choices=ORDER_STATUS_CHOICES)
@@ -108,16 +109,30 @@ class Oder(models.Model):
         verbose_name_plural = "orders"
         ordering = ['-id']
 
-    def __str__(self):
-        return self.order_i
+def __str__(self):
+    return str(self.customer.user.email)
+
     
 
-    class Oder_items(models.Model):
-        customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-        order = models.ForeignKey(Oder,on_delete=models.CASCADE)
-        qty = models.IntegerField()
-        store = models.ForeignKey(Store, on_delete=models.CASCADE)
-        amnt = models.FloatField()
+class Order_items(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order,on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    product = models.ForeignKey(FoodItems, on_delete=models.CASCADE)
+
+    qty = models.IntegerField()
+    amnt = models.FloatField()
+
+
+    class Meta:
+        db_table = 'order_item'
+        verbose_name = 'order_item'
+        verbose_name_plural = "order_items"
+        ordering = ['-id']
+
+def __str__(self):
+    return str(self.customer.user.email)
+
         
     
 
