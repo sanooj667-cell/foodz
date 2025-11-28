@@ -1,0 +1,92 @@
+{% extends 'base/web-base.html' %}
+{% load static %}
+
+{% block container %}
+
+<header class="h-[80px] shadow-md">
+    <ul class="flex justify-between w-[55%] md:w-[50%] py-3">
+        <li><a href="{% url 'web:index' %}"><img src="{% static 'web/images/arrow.png' %}" alt="img"
+                    class="w-[24px] ml-6  py-3"></a></li>
+        <li class="font-bold text-[30px]">Account</li>
+    </ul>
+</header>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mx-3 mt-10">
+    <!-- Left Sidebar -->
+    <div class="bg-white  rounded-xl p-6 flex flex-col items-center text-center ">
+        <!-- Profile -->
+        <img src="{% static 'web/images/man.png' %}" class="w-20 h-20 rounded-full object-cover mb-4" />
+
+        <h2 class="font-semibold text-lg">{{customer.user.first_name}} {{customer.user.last_name}}</h2>
+        <!-- <p class="text-gray-600">+91 8111805241</p> -->
+        <p class="text-gray-600">{{customer.user.email}}</p>
+
+        <!-- Buttons -->
+        <div class="w-full mt-6 space-y-3">
+            <a href="{% url 'web:address_page' %}"
+                class="w-full bg-emerald-500 text-white font-medium py-3 rounded-xl flex items-center justify-start px-3 gap-2">
+                <img src="{% static 'web/images/address.png' %}" alt="image" class="w-[18px] mr-2"> Manage Addresses
+            </a>
+
+            <a href="{% url 'web:cart' %}"
+                class="w-full bg-emerald-500 text-white font-medium py-3 rounded-xl flex items-center justify-start px-3 gap-2">
+                <img src="{% static 'web/images/cart.png' %}" alt="image" class="w-[18px] mr-2">Orders
+            </a>
+
+            <a href="{% url 'web:logout' %}"
+                class="w-full bg-emerald-500 text-white font-medium py-3 rounded-xl flex items-center justify-start px-3 gap-2">
+                <img src="{% static 'web/images/logout.png' %}" alt="image" class="w-[18px] mr-2"> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="md:col-span-2">
+        <h2 class="text-lg font-semibold mb-4">Recent Orders</h2>
+
+        <div class="-full max-w-2xl">
+            <!-- Order Card -->
+            <div class="bg-white shadow-md rounded-2xl border-2 p-4 w-full">
+                <div class="flex items-start gap-4">
+                    <img src="{% static 'web/images/rest1.png' %}" class="w-20 h-20 rounded-lg object-cover" />
+
+                    <div class="flex-1">
+                        <div class="flex justify-between">
+                            <h3 class="font-semibold text-lg">Al Faham Full</h3>
+                            <p class="text-sm font-semibold text-gray-600">#164</p>
+                        </div>
+
+                        <p class="text-gray-600">₹ 330 | 2 Items</p>
+
+                        <hr class="my-3" />
+
+                        <div class="flex items-center justify-between">
+                            <a class="bg-emerald-500 text-white font-semibold px-5 py-2 rounded-lg text-sm">
+                                TRACK ORDER
+                            </a>
+
+                            <p class="text-red-500 font-semibold text-sm">Preparing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

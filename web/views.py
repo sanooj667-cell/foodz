@@ -467,6 +467,47 @@ def offer(request):
 
 
 
+def checkout(request):
+    user = request.user
+    customer = Customer.objects.get(user=user)
+    cart_items = CartItem.objects.filter(customer=customer)
+
+
+    return render(request, "web/checkout.html")
+
+
+
+
+
+
+
+def account(request):
+    user = request.user
+    customer = Customer.objects.get(user = user)
+    orders = Order.objects.filter(customer = customer)
+
+
+    order_item_count = []
+    order_count = 0
+
+   
+
+
+
+
+
+    context ={
+        "customer" : customer,
+        "order" :orders,
+    }
+
+
+    return render(request, "web/account.html", context=context)
+
+
+
+
+
 
 
 

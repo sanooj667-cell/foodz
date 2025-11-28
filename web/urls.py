@@ -28,15 +28,20 @@ urlpatterns = [
     path('cart_decriment/<int:id>/',views.cart_decriment,name="cart_decriment"),
     path('add_address/',views.add_address,name="add_address"),
     path('offer/',views.offer,name="offer"),
+    path('account/',views.account,name="account"),
+    path('checkout/',views.checkout,name="checkout"),
 
 
-    path('place_order/',views.place_order,name="place_order"),
+
+
 
 
 
     path('delete_address/<int:id>/',views.delete_address,name="delete_address"),
     path('edit_addres/<int:id>/',views.edit_addres,name="edit_addres"),
     path('select_address/<int:id>/',views.select_address,name="select_address"),
+    path('place_order/',views.place_order,name="place_order"),
+
 
 
 
