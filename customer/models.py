@@ -80,8 +80,8 @@ class Bill(models.Model):
         verbose_name_plural = "bills"
         ordering = ['-id']
 
-def __str__(self):
-    return f"Bill #{self.id} - ₹{self.totel}"
+    def __str__(self):
+        return f"Bill #{self.id} - ₹{self.totel}"
 
 
 
@@ -109,14 +109,14 @@ class Order(models.Model):
         verbose_name_plural = "orders"
         ordering = ['-id']
 
-def __str__(self):
-    return str(self.customer.user.email)
+    def __str__(self):
+        return str(self.order_id)
 
     
 
 class Order_items(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order,on_delete=models.CASCADE)
+    order = models.ForeignKey(Order,on_delete=models.CASCADE, related_name='order_item')
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     product = models.ForeignKey(FoodItems, on_delete=models.CASCADE)
 
@@ -130,8 +130,8 @@ class Order_items(models.Model):
         verbose_name_plural = "order_items"
         ordering = ['-id']
 
-def __str__(self):
-    return str(self.customer.user.email)
+    def __str__(self):
+        return str(f"{self.product.name}---{self.order.order_id}")
 
         
     

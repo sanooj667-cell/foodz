@@ -208,6 +208,8 @@ def cart_plus(request, id):
 
 
 def cart_minies(request, id):
+    user= request.user
+    customer = Customer.objects.get(user = user)
     cart_item = CartItem.objects.get(id=id)
 
     if cart_item.quantity > 1:
@@ -231,8 +233,8 @@ def cart(request):
     customer = Customer.objects.get(user=user)
     cart_items = CartItem.objects.filter(customer=customer)
 
-    if not  cart_items.exists():
-        return render(request, 'web/cart.html')
+    
+    
     
     sub_totel = sum(item.amount for item in cart_items)
 
@@ -241,17 +243,24 @@ def cart(request):
 
 
     totel = sub_totel - offer_price + delivery_charge
+    if not Bill.objects.filter(customer=customer).exists():
+        Bill.objects.create(
+            customer = customer,
+            sub_totel = sub_totel,
+            offer_price = offer_price,
+            delivary_charge = delivery_charge,
+            totel = totel,
+        )
+    else:
+        bill = Bill.objects.get(customer=customer)
+        bill.sub_totel = sub_totel
+        bill.totel = totel 
+        bill.save()
 
-    Bill.objects.create(
-        customer = customer,
-        sub_totel = sub_totel,
-        offer_price = offer_price,
-        delivary_charge = delivery_charge,
-        totel = totel,
-
-    )
 
 
+    if not  cart_items.exists():
+        Bill.objects.get(customer=customer).delete()
 
 
 
@@ -303,6 +312,7 @@ def cart_decriment(request, id):
         cart_item.save()
     else:
         cart_item.delete()
+        Bill.objects.get(customer = customer)
 
 
     return HttpResponseRedirect(reverse("web:cart"))
@@ -403,14 +413,11 @@ def place_order(request):
 
 
     cart_items = CartItem.objects.filter(customer=customer)
-
-
-    if not cart_items.exists():
-        return redirect("cart")
+        
     
 
 
-    address = Address.objects.get(user=user, is_slected =True)
+    address = Address.objects.get(customer=customer, is_selected =True)
     if Order.objects.filter(customer=customer).exists():
         preord = Order.objects.filter(customer=customer).first()
         order_id = f"ORD000{preord.id +1}"
@@ -420,38 +427,38 @@ def place_order(request):
 
 
 
-    sub_totel = Sum(item.amount for item in cart_items)
+    sub_totel = sum(item.amount for item in cart_items)
     offer_price = 0 
-    delivery_charge = 30
+    delivery_charge = 0
     totel = sub_totel - offer_price + delivery_charge
 
-
-    order = Order.objects.create(
-        customer = customer,
-        address = address,
-        offer_price = offer_price,
-        store = cart_items.first().store,
-        delivery_charge = delivery_charge,
-        sub_totel= sub_totel,    
-        totel = totel,
-        order_id = order_id,
-        status = "PENDING"
-    )
-
-    for item in cart_items:
-        order_item =Order_items.objects.create(
+    if cart_items.exists():
+        order = Order.objects.create(
             customer = customer,
-            order = order,
-            store = item.store,
-            product = item.item,
-            quantity = item.quantity,
-            amount = item.amount,
+            address = address,
+            offer_price = offer_price,
+            store = cart_items.first().store,
+            delivary_charge = delivery_charge,
+            sub_totel= sub_totel,    
+            totel = totel,
+            order_id = order_id,
+            status = "PENDING"
         )
 
+        for item in cart_items:
+            order_item =Order_items.objects.create(
+                customer = customer,
+                order = order,
+                store = item.store,
+                product = item.item,
+                qty= item.quantity,
+                amnt = item.amount,
+            )
 
-        cart_items.delete()
 
-        return redirect("orders")
+            cart_items.delete()
+
+        return redirect("web:account")
 
 
 
@@ -470,10 +477,17 @@ def offer(request):
 def checkout(request):
     user = request.user
     customer = Customer.objects.get(user=user)
-    cart_items = CartItem.objects.filter(customer=customer)
+    bill = Bill.objects.get(customer=customer)
 
 
-    return render(request, "web/checkout.html")
+    context = {
+        "bill" : bill
+    }
+
+
+    return render(request, "web/checkout.html", context=context)
+
+
 
 
 
@@ -485,10 +499,7 @@ def account(request):
     user = request.user
     customer = Customer.objects.get(user = user)
     orders = Order.objects.filter(customer = customer)
-
-
-    order_item_count = []
-    order_count = 0
+    
 
    
 
@@ -498,7 +509,7 @@ def account(request):
 
     context ={
         "customer" : customer,
-        "order" :orders,
+        "orders" :orders,
     }
 
 

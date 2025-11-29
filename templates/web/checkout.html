@@ -5,7 +5,7 @@
 
 <header class="h-[80px] shadow-md">
     <ul class="flex justify-between w-[55%] md:w-[50%] py-3">
-        <li><a href="{% url 'web:index' %}"><img src="{% static 'web/images/arrow.png' %}" alt="img"
+        <li><a href="{% url 'web:cart' %}"><img src="{% static 'web/images/arrow.png' %}" alt="img"
                     class="w-[24px] ml-6  py-3"></a></li>
         <li class="font-bold text-[30px]">Checkout</li>
     </ul>
@@ -15,10 +15,10 @@
 
     <div class="col-span-1 p-4 rounded-lg border  md:w-[50%] sm:w-[40%] mx-2 shadow-md">
         <h1 class="font-bold">BILL DETAILES</h1>
-        <p class="flex justify-between my-4 border-b font-semibold mt-3 pb-2">item totel <span>₹300</span></p>
-        <p class="flex justify-between my-4 border-b font-semibold  pb-2">Offer Applied <span>-₹50</span></p>
-        <p class="flex justify-between my-4 border-b font-semibold  pb-2">delivery_charge<span>₹300</span></p>
-        <h1 class="flex justify-between my-4 text-black font-black  pb-2">To Pay <span>₹300</span></h1>
+        <p class="flex justify-between my-4 border-b font-semibold mt-3 pb-2">item totel <span>₹{{ bill.sub_totel}}</span></p>
+        <p class="flex justify-between my-4 border-b font-semibold  pb-2">Offer Applied <span>-₹{{ bill.offer_price}}</span></p>
+        <p class="flex justify-between my-4 border-b font-semibold  pb-2">delivery_charge<span>₹{{ bill.delivery_charge}}</span></p>
+        <h1 class="flex justify-between my-4 text-black font-black  pb-2">To Pay <span>₹{{ bill.totel}}</span></h1>
     </div>
 
 </section>
@@ -46,9 +46,9 @@
 
 <section class="flex justify-center my-4">
 
-    <div class="col-span-1 p-4 rounded-lg bg-red-500  md:w-[50%] sm:w-[40%] mx-2 shadow-md font-bold text-white text-center">
+    <a href="{% url 'web:place_order' %}" class="col-span-1 p-4 rounded-lg bg-red-500  md:w-[50%] sm:w-[40%] mx-2 shadow-md font-bold text-white text-center">
         PLACE ORDER
-    </div>
+    </a>
 
 </section>        
 
