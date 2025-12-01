@@ -1,0 +1,27 @@
+{% extends 'base/web-base.html' %}
+{% load static %}
+
+{% block container %}
+
+<header class="h-[80px] shadow-md">
+    <ul class="flex justify-between w-[55%] md:w-[50%] py-3">
+        <li><a href="{% url 'web:checkout' %}"><img src="{% static 'web/images/arrow.png' %}" alt="img"
+                    class="w-[24px] ml-6  py-3"></a></li>
+        <li class="font-bold text-[30px]">Track Order</li>
+    </ul>
+</header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

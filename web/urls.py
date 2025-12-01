@@ -30,6 +30,8 @@ urlpatterns = [
     path('offer/',views.offer,name="offer"),
     path('account/',views.account,name="account"),
     path('checkout/',views.checkout,name="checkout"),
+    path('track_order/',views.track_order,name="track_order"),
+
 
 
 

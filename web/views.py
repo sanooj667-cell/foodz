@@ -519,6 +519,16 @@ def account(request):
 
 
 
+def track_order(request):
+
+
+    return render(request, "web/track_order.html",)
+
+
+
+
+
+
 
 
 
