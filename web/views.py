@@ -261,14 +261,13 @@ def cart(request):
 
     if not  cart_items.exists():
         Bill.objects.get(customer=customer).delete()
+        store = None  
+    else:
+        store = cart_items.first().store
 
 
+  
 
-
-
-
-
-    store = cart_items.first().store
 
     selected_addres= Address.objects.filter(is_selected=True).first()
 
@@ -304,6 +303,8 @@ def cart_incriment(request, id):
 
 
 def cart_decriment(request, id):
+    user = request.user
+    customer = Customer.objects.get(user=user)
     cart_item = CartItem.objects.get(id=id)
 
     if cart_item.quantity > 1:
@@ -477,7 +478,9 @@ def offer(request):
 def checkout(request):
     user = request.user
     customer = Customer.objects.get(user=user)
-    bill = Bill.objects.get(customer=customer)
+
+
+    bill = Bill.objects.filter(customer=customer).first()
 
 
     context = {
