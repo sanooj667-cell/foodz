@@ -26,7 +26,7 @@
                             <div class="card-body">
                                 <div class="heading-line">
                                     <h4 class="card-title m-0 p-0">Store Categories</h4>
-                                    <a href="{% url 'manager:store_category_create' %}" id="custom-btn">ADD NEW</a>
+                                    <a href="{% url 'manager:store_category_creat' %}" id="custom-btn">ADD NEW</a>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered zero-configuration" style="border-radius: 14px;">
@@ -46,10 +46,10 @@
                                                 </td>
                                                 <td>{{instance.name}}</td>
                                                 <td>
-                                                    <a href="{% url 'manager:store_category_update' id=instance.id %}" id="custom-btn">EDIT</a>
+                                                    <a href="" id="custom-btn">EDIT</a>
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'manager:store_category_delete' id=instance.id %}" id="custom-btn">DELETE</a>
+                                                    <a href="{% url 'manager:store_category_delete' instance.id %}" id="custom-btn">DELETE</a>
                                                 </td>
                                             </tr>
                                             {% endfor %}

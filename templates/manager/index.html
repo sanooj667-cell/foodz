@@ -86,31 +86,31 @@
                                                     <tr>
                                                         <td>{{instance.customer.user.first_name}} {{instance.customer.user.last_name}}</td>
                                                         <td>{{instance.store.name}}</td>
-                                                        <td>{{instance.total}}</td>
+                                                        <td>{{instance.amnt}}</td>
                                                         <td>
-                                                            <a href="{% url 'manager:order_assign' id=instance.id %}" id="custom-btn">ASSIGN</a>
+                                                            <a href="" id="custom-btn">ASSIGN</a>
                                                         </td>
                                                         <td>
-                                                            <a href="{% url 'manager:order' id=instance.id %}" id="custom-btn">VIEW</a>
+                                                            <a href="" id="custom-btn">VIEW</a>
                                                         </td>
                                                         <td class="text-white">
-                                                            {% if instance.status == 'PL' %}
-                                                                <a href="{% url 'manager:order_accept' id=instance.id %}" id="custom-green">ACCEPT</a>
+                                                            {% if instance.status == 'PENDING' %}
+                                                                <a href="" id="custom-green">ACCEPT</a>
                                                                 <br> <br>
-                                                                <a href="{% url 'manager:order_reject' id=instance.id %}" id="custom-red">REJECT</a>
-                                                            {% elif instance.status == 'AC' %}
-                                                                <a href="{% url 'manager:order_prepared' id=instance.id %}" id="custom-green">SHIPED</a>
+                                                                <a href="" id="custom-red">REJECT</a>
+                                                            {% elif instance.status == 'CONFIRMED' %}
+                                                                <a href="" id="custom-green">SHIPED</a>
                                                                 <br> <br>
-                                                                <a href="{% url 'manager:order_reject' id=instance.id %}" id="custom-red">CANCELL</a>
-                                                            {% elif instance.status == 'SH' %}
-                                                                <a href="{% url 'manager:order_picked' id=instance.id %}" id="custom-green">ON THE WAY</a>
+                                                                <a href="" id="custom-red">CANCELL</a>
+                                                            {% elif instance.status == 'PREPARING' %}
+                                                                <a href="" id="custom-green">ON THE WAY</a>
                                                                 <br> <br>
-                                                                <a href="{% url 'manager:order_reject' id=instance.id %}" id="custom-red">CANCELL</a>
-                                                            {% elif instance.status == 'DI' %}
-                                                                <a href="{% url 'manager:order_completed' id=instance.id %}" id="custom-green">COMPLETE</a>
+                                                                <a href="" id="custom-red">CANCELL</a>
+                                                            {% elif instance.status == 'READY' %}
+                                                                <a href="" id="custom-green">COMPLETE</a>
                                                                 <br> <br>
-                                                                <a href="{% url 'manager:order_reject' id=instance.id %}" id="custom-red">CANCELL</a>
-                                                            {% elif instance.status == 'CA' %}
+                                                                <a href="" id="custom-red">CANCELL</a>
+                                                            {% elif instance.status == 'CANCELLED' %}
                                                                 <a href="#" id="custom-red">CANCELLED</a>
                                                             {% else %}
                                                                 <a style="font-size: 12px;" class="btn-rounded py-2 px-3  mb-1 btn-primary color-white">

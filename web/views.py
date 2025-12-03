@@ -111,7 +111,7 @@ def restaurents(request, id):
 
 
 
-   
+@login_required(login_url='/login/')
 def single_restaurent(request, id):
     single_restaurent = Store.objects.get(id=id)
     food_category = FoodCatagory.objects.filter(store=single_restaurent)
@@ -227,7 +227,7 @@ def cart_minies(request, id):
 
 
 
-
+@login_required(login_url='/login/')
 def cart(request):
     user = request.user
     customer = Customer.objects.get(user=user)
@@ -328,7 +328,7 @@ def cart_decriment(request, id):
 
 
 
-
+@login_required(login_url='/login/')
 def address_page(request):
     user = request.user
     customer = Customer.objects.get(user=user)
@@ -344,7 +344,7 @@ def address_page(request):
 
 
 
-
+@login_required(login_url='/login/')
 def add_address(request):
 
     if request.method == 'POST':
@@ -408,6 +408,8 @@ def select_address(request, id):
 
 
 
+
+@login_required(login_url='/login/')
 def place_order(request):
     user = request.user
     customer = Customer.objects.get(user=user)
@@ -475,6 +477,8 @@ def offer(request):
 
 
 
+
+@login_required(login_url='/login/')
 def checkout(request):
     user = request.user
     customer = Customer.objects.get(user=user)
@@ -496,8 +500,7 @@ def checkout(request):
 
 
 
-
-
+@login_required(login_url='/login/')
 def account(request):
     user = request.user
     customer = Customer.objects.get(user = user)
@@ -521,7 +524,7 @@ def account(request):
 
 
 
-
+@login_required(login_url='/login/')
 def track_order(request):
 
 
