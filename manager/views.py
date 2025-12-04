@@ -250,7 +250,22 @@ def foodcategory(request):
         }
     
     return render(request, "manager/food_category.html", context=context)
+
+
+
+
+
+
+
+def fooditems(request):
+
+    instances = FoodItems.objects.all()
+
+    context = {
+        "instances" : instances 
+    }
     
+    return render(request, "manager/food_item.html", context=context)
 
 
 
