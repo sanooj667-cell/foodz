@@ -46,7 +46,7 @@
                                                 </td>
                                                 <td>{{instance.name}}</td>
                                                 <td>
-                                                    <a href="" id="custom-btn">EDIT</a>
+                                                    <a href="{% url 'manager:store_category_update' instance.id %}" id="custom-btn">EDIT</a>
                                                 </td>
                                                 <td>
                                                     <a href="{% url 'manager:store_category_delete' instance.id %}" id="custom-btn">DELETE</a>

@@ -20,6 +20,7 @@ def index(request):
 
 
 
+# ----------------------store-----------------------------------------------------------
 
 
 def store(request):
@@ -33,10 +34,86 @@ def store(request):
     return render(request,"manager/store.html", context=context)
 
 
+def store_creat(request):
+    if request.method == "POST":
+        form = StoreForm(request.POST,request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+
+            return HttpResponseRedirect(reverse('manager:store'))
+        
+        else:
+            messege = genarate_form_error(form)
+            form = StoreForm()
+            context = {
+                "form" : form,
+                "errors" : True,
+                "message" : messege
+            }
+            return render(request , "manager/add_store.html", context=context)
+    else:
+        form = StoreForm()
+
+        context= {
+            "form" : form
+        }
+        
+        return render(request , "manager/add_store.html", context=context)
+    
 
 
 
 
+
+
+
+def store_update(request,id):
+
+    instance = get_object_or_404(Store, id=id)
+
+    if request.method == "POST":
+        form = StoreForm(request.POST,request.FILES, instance=instance)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            return HttpResponseRedirect(reverse("manager:store"))
+            
+        else:
+            messege =  genarate_form_error(form)
+            form = StoreForm()
+
+            context = {
+                "messege" : messege,
+                "errors" : True,
+                "messege" : messege,
+            }
+            return render(request , "manager/add_store.html", context=context)
+
+
+
+
+    else:
+        form = StoreForm(instance=instance)
+        context = {
+            "form" : form
+        }  
+
+        return render(request , "manager/add_store.html", context=context)    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+# ----------------------store category-----------------------------------------------------------
 
 
 def store_category(request):
@@ -78,11 +155,51 @@ def store_category_creat(request):
         return render(request , "manager/add-store-categories.html", context=context)
     
 
-def store_category_update(request,id):
+def store_delete(request, id):
+    instance = get_object_or_404(Store, id=id)
+    instance.delete()
 
-    return HttpResponseRedirect(reverse('manager:store_category'))
+    return HttpResponseRedirect(reverse('manager:store'))
+    
+
+
+
 
     
+
+def store_category_update(request,id):
+
+    instance = get_object_or_404(Storecategory, id=id)
+
+    if request.method == "POST":
+        form = StoreCategoryForm(request.POST,request.FILES, instance=instance)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            return HttpResponseRedirect(reverse("manager:store_category"))
+            
+        else:
+            messege =  genarate_form_error(form)
+            form = StoreCategoryForm()
+
+            context = {
+                "messege" : messege,
+                "errors" : True,
+                "messege" : messege,
+            }
+            return render(request , "manager/add-store-categories.html", context=context)
+
+
+
+
+    else:
+        form = StoreCategoryForm(instance=instance)
+        context = {
+            "form" : form
+        }  
+
+        return render(request , "manager/add-store-categories.html", context=context)
+
 
 
 
@@ -112,4 +229,28 @@ def slider(request):
     }
     
     return render(request,"manager/slider.html", context=context)
+
+
+
+
+
+
+
+
+
+
+#  ------------------------ product--------------------------------------------
+
+def foodcategory(request):
+
+    instances = FoodCatagory.objects.all()
+
+    context = {
+        "instances" : instances
+        }
+    
+    return render(request, "manager/add_store.html", context=context)
+    
+
+
 
