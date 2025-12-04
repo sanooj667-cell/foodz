@@ -249,7 +249,7 @@ def foodcategory(request):
         "instances" : instances
         }
     
-    return render(request, "manager/add_store.html", context=context)
+    return render(request, "manager/food_category.html", context=context)
     
 
 
