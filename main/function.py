@@ -6,11 +6,11 @@ def genarate_form_error(form):
         if field.errors:
             message += field.errors
 
-    for err in form.non_field_error():
+    for err in form.non_field_errors():
         message += str(err)
 
 
 
-        return message      
+    return message      
           
 

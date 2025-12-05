@@ -20,6 +20,21 @@ urlpatterns = [
 
 
     path('foodcategory/',views.foodcategory ,name="foodcategory"),
+    path('foodcategory_creat/',views.foodcategory_creat ,name="foodcategory_creat"),
+    path('foodcategory_update/<int:id>/',views.foodcategory_update ,name="foodcategory_update"),
+    path('foodcategory_delete/<int:id>/',views.foodcategory_delete ,name="foodcategory_delete"),
+
+
+
+
+
+    path('fooditems/',views.fooditems ,name="fooditems"),
+    path('fooditems_creat/',views.fooditems_creat ,name="fooditems_creat"),
+    path('fooditem_update/<int:id>/',views.fooditem_update ,name="fooditem_update"),
+    path('fooditem_delete/<int:id>/',views.fooditem_delete ,name="fooditem_delete"),
+    
+
+
 
     
 
