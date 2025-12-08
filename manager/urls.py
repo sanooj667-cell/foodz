@@ -33,6 +33,12 @@ urlpatterns = [
     path('delete_address/<int:id>/',views.delete_address ,name="delete_address"),
 
 
+    path('cart/',views.cart ,name="cart"),
+    path('delete_cart/<int:id>/',views.delete_cart ,name="delete_cart"),
+
+
+
+
     
     
 

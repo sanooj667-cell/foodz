@@ -1,6 +1,6 @@
 from django.shortcuts import render , reverse,get_object_or_404
 from django.http.response import HttpResponseRedirect
-from customer.models import Order_items, Address
+from customer.models import Order_items, Address, CartItem,Order
 from restaurent.models import Storecategory, Slider, Store
 from manager.forms import *
 from main.function import genarate_form_error
@@ -418,6 +418,9 @@ def fooditem_delete(request, id):
 
 
 
+
+
+
 def address(request):
 
     instances = Address .objects.all()
@@ -439,5 +442,37 @@ def delete_address(request, id):
 
 
 
+
+
+def cart(request):
+    instance = CartItem.objects.all()
+
+    context = {
+        "instances" : instance
+    }
+
+    return render(request, "manager/cart.html", context=context)
+
+
+
+def delete_cart(request, id):
+    instance = get_object_or_404(CartItem,id=id)
+    instance.delete()
+    return HttpResponseRedirect(reverse("manager:cart"))
+
+
+
+
+
+
+
+def order(request):
+    instance = Order.objects.all()
+
+    context = {
+        "instances" : instance
+    }
+
+    return render(request, "manager/order.html", context=context)
 
 
