@@ -467,12 +467,17 @@ def delete_cart(request, id):
 
 
 def order(request):
-    instance = Order.objects.all()
+    instance = Order_items.objects.all()
 
     context = {
         "instances" : instance
     }
 
     return render(request, "manager/order.html", context=context)
+
+def delete_order(request, id):
+    instance = get_object_or_404(Order_items,id=id)
+    instance.delete()
+    return HttpResponseRedirect(reverse("manager:order"))
 
 

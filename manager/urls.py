@@ -37,6 +37,12 @@ urlpatterns = [
     path('delete_cart/<int:id>/',views.delete_cart ,name="delete_cart"),
 
 
+    path('order/',views.order ,name="order"),
+    path('delete_order/<int:id>/',views.delete_order ,name="delete_order"),
+
+
+
+
 
 
     
