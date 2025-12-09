@@ -1,6 +1,7 @@
 from django.shortcuts import render , reverse,get_object_or_404
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth import authenticate, login as login_manager, logout as logout_manager
+from django.contrib.auth.decorators import login_required
 from customer.models import Order_items, Address, CartItem,Customer
 from restaurent.models import Storecategory, Slider, Store
 from manager.forms import *
@@ -9,6 +10,8 @@ from main.function import genarate_form_error
 
 # Create your views here.
 
+
+login_required(login_url='/manager/login')
 def index(request):
 
     instances = Order_items.objects.all()
@@ -36,6 +39,12 @@ def login(request):
             return render(request, 'manager/login.html',context=context)
     else:
         return render(request, "manager/login.html")
+    
+
+def logout(request):
+    logout_manager(request)
+    return HttpResponseRedirect(reverse('manager:login'))
+
 
 
 

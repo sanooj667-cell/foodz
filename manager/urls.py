@@ -6,6 +6,13 @@ app_name ="manager"
 
 urlpatterns = [
     path('',views.index ,name="index"),
+    path('login/',views.login ,name="login"),
+    path('logout/',views.logout ,name="logout"),
+
+
+    
+    
+
     path('slider/',views.slider ,name="slider"),
 
     path('store/',views.store ,name="store"),
