@@ -41,6 +41,13 @@ urlpatterns = [
     path('delete_order/<int:id>/',views.delete_order ,name="delete_order"),
 
 
+    path('custamer/',views.custamer ,name="custamer"),
+    path('delete_custamer/<int:id>/',views.delete_custamer ,name="delete_custamer"),
+
+
+
+
+
 
 
 

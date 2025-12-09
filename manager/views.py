@@ -1,6 +1,7 @@
 from django.shortcuts import render , reverse,get_object_or_404
 from django.http.response import HttpResponseRedirect
-from customer.models import Order_items, Address, CartItem,Order
+from django.contrib.auth import authenticate, login as login_manager, logout as logout_manager
+from customer.models import Order_items, Address, CartItem,Customer
 from restaurent.models import Storecategory, Slider, Store
 from manager.forms import *
 from main.function import genarate_form_error
@@ -17,6 +18,24 @@ def index(request):
     }
 
     return render (request,"manager/index.html", context=context)
+
+
+def login(request):
+    if request.method =="POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        user = authenticate(request,email=email,password = password)
+        if user is not None and user.is_superuser:
+            login_manager(request,user)
+            return HttpResponseRedirect(reverse("manager:index"))
+        else:
+            message = "invalid email or password"
+            context = {
+                "message":message
+            }
+            return render(request, 'manager/login.html',context=context)
+    else:
+        return render(request, "manager/login.html")
 
 
 
@@ -430,6 +449,8 @@ def address(request):
     }
     
     return render(request, "manager/address.html", context=context)
+
+
     
 
 def delete_address(request, id):
@@ -479,5 +500,29 @@ def delete_order(request, id):
     instance = get_object_or_404(Order_items,id=id)
     instance.delete()
     return HttpResponseRedirect(reverse("manager:order"))
+
+
+
+
+
+
+def custamer(request):
+    instance = Customer.objects.all()
+
+    context = {
+        "instances" : instance
+    }
+
+    return render(request, "manager/custamer.html", context=context)
+
+
+
+def delete_custamer(request, id):
+    instance = get_object_or_404(Customer,id=id)
+    instance.delete()
+    return HttpResponseRedirect(reverse("manager:custamer"))
+
+
+
 
 
