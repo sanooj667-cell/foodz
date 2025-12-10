@@ -2,9 +2,10 @@ from django.shortcuts import render , reverse,get_object_or_404
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth import authenticate, login as login_manager, logout as logout_manager
 from django.contrib.auth.decorators import login_required
-from customer.models import Order_items, Address, CartItem,Customer
+from customer.models import Order_items, Address, CartItem,Customer,User
 from restaurent.models import Storecategory, Slider, Store
 from manager.forms import *
+from .models import Manager
 from main.function import genarate_form_error
 
 
@@ -21,6 +22,45 @@ def index(request):
     }
 
     return render (request,"manager/index.html", context=context)
+
+
+def register(request):
+    if request.method == "POST":
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        if User.objects.filter(email = email).exists():
+            message = "email already exists"
+            context={
+                "message" : message
+            }
+
+            return render(request, "manager/register.html" , context=context)
+        
+        else:
+            user = User.objects.create_user(
+                first_name = first_name,
+                last_name = last_name,
+                email = email,
+                password = password,
+                is_superuser = True,
+                is_staff = True,
+                is_manager = True
+            )
+            user.save()
+
+            manager = Manager.objects.create(user=user) 
+            manager.save()
+
+            return HttpResponseRedirect(reverse("manager:index"))\
+            
+    else:
+        return render(request, "manager/register.html") 
+
+
+
 
 
 def login(request):
@@ -44,6 +84,17 @@ def login(request):
 def logout(request):
     logout_manager(request)
     return HttpResponseRedirect(reverse('manager:login'))
+
+
+def profile(request):
+    user = request.user
+    manager = get_object_or_404(Manager, user=user)
+    context = {
+        "manager" : manager
+    }
+
+    return render(request, "manager/profile.html", context=context )
+
 
 
 
